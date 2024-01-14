@@ -1,0 +1,79 @@
+source code : https://www.cppforschool.com/project/tic-tac-toe-project.html
+source code : https://youtu.be/wdre-M8Lbq8
+
+#include <iostream>
+using namespace std;
+
+char square[10];
+
+void displayboard(){
+    system("cls");
+    cout<<"\n\n\tTic Tac Toe\n\n";
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            cout<<square[i*3+j]<<" | ";
+        }
+        cout<<endl;
+    }
+}
+
+int checkWin(){
+    char mark1 = 'X', mark2 = 'O';
+
+    for(int i=0;i<3;i++){
+        if((square[i*3] == mark1 && square[i*3+1] == mark1 && square[i*3+2] == mark1) ||
+           (square[i] == mark1 && square[i+3] == mark1 && square[i+6] == mark1) ||
+           (square[0] == mark1 && square[4] == mark1 && square[8] == mark1) ||
+           (square[2] == mark1 && square[4] == mark1 && square[6] == mark1)){
+            return 1;
+        }
+
+        if((square[i*3] == mark2 && square[i*3+1] == mark2 && square[i*3+2] == mark2) ||
+           (square[i] == mark2 && square[i+3] == mark2 && square[i+6] == mark2) ||
+           (square[0] == mark2 && square[4] == mark2 && square[8] == mark2) ||
+           (square[2] == mark2 && square[4] == mark2 && square[6] == mark2)){
+            return 2;
+        }
+    }
+    return -1;
+}
+
+char numberToLetter(int num){
+    return 'A' + num - 1;
+}
+
+int main(){
+    int player1 = 1, player2 = 2, turn = 1;
+    char mark1 = 'X', mark2 = 'O';
+
+    for(int i=0; i<9; i++){
+        square[i] = ' ';
+    }
+
+    while(turn <= 9){
+        displayboard();
+        if(turn % 2 == 1){
+            cout << "Player " << player1 << ", enter a number: ";
+            int choice;
+            cin >> choice;
+            square[choice - 1] = mark1;
+            turn++;
+        }else{
+            cout << "Player " << player2 << ", enter a number: ";
+            int choice;
+            cin >> choice;
+            square[choice - 1] = mark2;
+            turn++;
+        }
+
+        int winner = checkWin();
+        if(winner > 0){
+            cout << numberToLetter(winner) << " wins!" << endl;
+            break;
+        } else if(turn == 10){
+            cout << "Tie!" << endl;
+        }
+    }
+
+    return 0;
+}
